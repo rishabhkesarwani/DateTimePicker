@@ -12,6 +12,7 @@ import UIKit
 @objc public class DateTimePicker: UIView {
     
     let contentHeight: CGFloat = 400
+    let elements = MyElements()
     
     // public vars
     public var backgroundViewColor: UIColor = .clear {
@@ -23,7 +24,7 @@ import UIKit
     public var highlightColor = UIColor(red: 0/255.0, green: 199.0/255.0, blue: 194.0/255.0, alpha: 1) {
         didSet {
             todayButton.setTitleColor(highlightColor, for: .normal)
-            colonLabel.textColor = highlightColor
+//            colonLabel.textColor = highlightColor
         }
     }
     
@@ -114,13 +115,7 @@ import UIKit
                             height: screenSize.height)
         
         // content view
-        contentView = UIView(frame: CGRect(x: 0, y: frame.height, width: frame.width, height: contentHeight))
-        contentView.layer.shadowColor = UIColor(white: 0, alpha: 0.3).cgColor
-        contentView.layer.shadowOffset = CGSize(width: 0, height: -1.5)
-        contentView.layer.shadowRadius = 0
-        contentView.layer.shadowOpacity = 0.5
-        contentView.backgroundColor = .white
-        contentView.isHidden = true
+        contentView = elements.myContentView(x: 0, y: frame.height, width: frame.width)
         addSubview(contentView)
         
         // title view
@@ -147,11 +142,7 @@ import UIKit
         titleView.addSubview(todayButton)
         
         // day collection view
-        let layout = StepCollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 10
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
-        layout.itemSize = CGSize(width: 75, height: 75)
+        let layout = elements.myCollectionViewLayout(width: 75, height: 75)
         
         dayCollectionView = UICollectionView(frame: CGRect(x: 0, y: 44, width: contentView.frame.width, height: 100), collectionViewLayout: layout)
         dayCollectionView.backgroundColor = daysBackgroundColor
@@ -165,29 +156,19 @@ import UIKit
         contentView.addSubview(dayCollectionView)
         
         // top & bottom borders on day collection view
-        let borderTopView = UIView(frame: CGRect(x: 0, y: titleView.frame.height, width: titleView.frame.width, height: 1))
-        borderTopView.backgroundColor = darkColor.withAlphaComponent(0.2)
+        let borderTopView = elements.myBorder(x: 0, y: titleView.frame.height, length: titleView.frame.width)
         contentView.addSubview(borderTopView)
         
-        let borderBottomView = UIView(frame: CGRect(x: 0, y: dayCollectionView.frame.origin.y + dayCollectionView.frame.height, width: titleView.frame.width, height: 1))
-        borderBottomView.backgroundColor = darkColor.withAlphaComponent(0.2)
+        let borderBottomView = elements.myBorder(x: 0, y: dayCollectionView.frame.origin.y + dayCollectionView.frame.height, length: titleView.frame.width)
         contentView.addSubview(borderBottomView)
         
         // done button
-        doneButton = UIButton(type: .system)
-        doneButton.frame = CGRect(x: 10, y: contentView.frame.height - 10 - 44, width: contentView.frame.width - 20, height: 44)
-        doneButton.setTitle(doneButtonTitle, for: .normal)
-        doneButton.setTitleColor(.white, for: .normal)
-        doneButton.backgroundColor = darkColor.withAlphaComponent(0.5)
-        doneButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
-        doneButton.layer.cornerRadius = 5
-        doneButton.layer.masksToBounds = true
-        doneButton.addTarget(self, action: #selector(DateTimePicker.dismissView), for: .touchUpInside)
+        doneButton = elements.myButton(x: 10, y: contentView.frame.height - 10 - 44, width: contentView.frame.width - 20, title: "BOOK", backgroundColor: elements.blueColor)
         contentView.addSubview(doneButton)
         
         // hour table view
         hourTableView = UITableView(frame: CGRect(x: contentView.frame.width / 2 - 60,
-                                                  y: borderBottomView.frame.origin.y + 2,
+                                                  y: borderBottomView.frame.origin.y + 5,
                                                   width: 60,
                                                   height: doneButton.frame.origin.y - borderBottomView.frame.origin.y - 10))
         hourTableView.rowHeight = 36
@@ -199,35 +180,35 @@ import UIKit
         contentView.addSubview(hourTableView)
         
         // minute table view
-        minuteTableView = UITableView(frame: CGRect(x: contentView.frame.width / 2,
-                                                    y: borderBottomView.frame.origin.y + 2,
-                                                    width: 60,
-                                                    height: doneButton.frame.origin.y - borderBottomView.frame.origin.y - 10))
-        minuteTableView.rowHeight = 36
-        minuteTableView.contentInset = UIEdgeInsetsMake(minuteTableView.frame.height / 2, 0, minuteTableView.frame.height / 2, 0)
-        minuteTableView.showsVerticalScrollIndicator = false
-        minuteTableView.separatorStyle = .none
-        minuteTableView.delegate = self
-        minuteTableView.dataSource = self
-        contentView.addSubview(minuteTableView)
+//        minuteTableView = UITableView(frame: CGRect(x: contentView.frame.width / 2,
+//                                                    y: borderBottomView.frame.origin.y + 2,
+//                                                    width: 60,
+//                                                    height: doneButton.frame.origin.y - borderBottomView.frame.origin.y - 10))
+//        minuteTableView.rowHeight = 36
+//        minuteTableView.contentInset = UIEdgeInsetsMake(minuteTableView.frame.height / 2, 0, minuteTableView.frame.height / 2, 0)
+//        minuteTableView.showsVerticalScrollIndicator = false
+//        minuteTableView.separatorStyle = .none
+//        minuteTableView.delegate = self
+//        minuteTableView.dataSource = self
+//        contentView.addSubview(minuteTableView)
         
         // colon
-        colonLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 10, height: 36))
-        colonLabel.center = CGPoint(x: contentView.frame.width / 2,
-                                    y: (doneButton.frame.origin.y - borderBottomView.frame.origin.y - 10) / 2 + borderBottomView.frame.origin.y)
-        colonLabel.text = ":"
-        colonLabel.font = UIFont.boldSystemFont(ofSize: 18)
-        colonLabel.textColor = highlightColor
-        colonLabel.textAlignment = .center
-        contentView.addSubview(colonLabel)
+//        colonLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 10, height: 36))
+//        colonLabel.center = CGPoint(x: contentView.frame.width / 2,
+//                                    y: (doneButton.frame.origin.y - borderBottomView.frame.origin.y - 10) / 2 + borderBottomView.frame.origin.y)
+//        colonLabel.text = ":"
+//        colonLabel.font = UIFont.boldSystemFont(ofSize: 18)
+//        colonLabel.textColor = highlightColor
+//        colonLabel.textAlignment = .center
+//        contentView.addSubview(colonLabel)
         
         // time separators
-        let separatorTopView = UIView(frame: CGRect(x: 0, y: 0, width: 90, height: 1))
+        let separatorTopView = UIView(frame: CGRect(x: 0, y: 0, width: contentView.frame.width - 40, height: 1))
         separatorTopView.backgroundColor = darkColor.withAlphaComponent(0.2)
         separatorTopView.center = CGPoint(x: contentView.frame.width / 2, y: (doneButton.frame.origin.y + borderBottomView.frame.origin.y) / 2 - 20)
         contentView.addSubview(separatorTopView)
         
-        let separatorBottomView = UIView(frame: CGRect(x: 0, y: 0, width: 90, height: 1))
+        let separatorBottomView = UIView(frame: CGRect(x: 0, y: 0, width: contentView.frame.width - 40, height: 1))
         separatorBottomView.backgroundColor = darkColor.withAlphaComponent(0.2)
         separatorBottomView.center = CGPoint(x: contentView.frame.width / 2, y: (doneButton.frame.origin.y + borderBottomView.frame.origin.y) / 2 + 20)
         contentView.addSubview(separatorBottomView)
@@ -271,10 +252,10 @@ import UIKit
             hourTableView.selectRow(at: IndexPath(row: hour + 24, section: 0), animated: true, scrollPosition: .middle)
         }
         
-        if let minute = components.minute {
-            let expectedRow = minute == 0 ? 120 : minute + 60 // workaround for issue when minute = 0
-            minuteTableView.selectRow(at: IndexPath(row: expectedRow, section: 0), animated: true, scrollPosition: .middle)
-        }
+//        if let minute = components.minute {
+//            let expectedRow = minute == 0 ? 120 : minute + 60 // workaround for issue when minute = 0
+//            minuteTableView.selectRow(at: IndexPath(row: expectedRow, section: 0), animated: true, scrollPosition: .middle)
+//        }
     }
     
     private func resetDateTitle() {

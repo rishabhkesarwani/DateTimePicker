@@ -15,6 +15,7 @@
 		DEF7C36B1D8B9EBC0043D9C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEF7C36A1D8B9EBC0043D9C4 /* Assets.xcassets */; };
 		DEF7C36E1D8B9EBC0043D9C4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEF7C36C1D8B9EBC0043D9C4 /* LaunchScreen.storyboard */; };
 		DEF7C37A1D8B9F590043D9C4 /* DateTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF7C3791D8B9F590043D9C4 /* DateTimePicker.swift */; };
+		E45713EE1DDB0209003F5762 /* MyElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45713ED1DDB0209003F5762 /* MyElements.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		DEF7C36D1D8B9EBC0043D9C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DEF7C36F1D8B9EBC0043D9C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DEF7C3791D8B9F590043D9C4 /* DateTimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTimePicker.swift; sourceTree = "<group>"; };
+		E45713ED1DDB0209003F5762 /* MyElements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyElements.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				DEF7C3791D8B9F590043D9C4 /* DateTimePicker.swift */,
 				DE54880E1D990C36002712DB /* DateCollectionViewCell.swift */,
 				DE58808E1D9A5F2E000C93E3 /* StepCollectionViewFlowLayout.swift */,
+				E45713ED1DDB0209003F5762 /* MyElements.swift */,
 			);
 			path = Source;
 			sourceTree = SOURCE_ROOT;
@@ -156,6 +159,7 @@
 			files = (
 				DE54880F1D990C36002712DB /* DateCollectionViewCell.swift in Sources */,
 				DE58808F1D9A5F2E000C93E3 /* StepCollectionViewFlowLayout.swift in Sources */,
+				E45713EE1DDB0209003F5762 /* MyElements.swift in Sources */,
 				DEF7C37A1D8B9F590043D9C4 /* DateTimePicker.swift in Sources */,
 				DEF7C3661D8B9EBC0043D9C4 /* ViewController.swift in Sources */,
 				DEF7C3641D8B9EBC0043D9C4 /* AppDelegate.swift in Sources */,
