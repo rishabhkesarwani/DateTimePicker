@@ -11,7 +11,7 @@ import UIKit
 
 @objc public class DateTimePicker: UIView {
     
-    let contentHeight: CGFloat = 310
+    let contentHeight: CGFloat = 400
     
     // public vars
     public var backgroundViewColor: UIColor = .clear {
@@ -59,7 +59,7 @@ import UIKit
         didSet {
             todayButton.setTitle(todayButtonTitle, for: .normal)
             let size = todayButton.sizeThatFits(CGSize(width: 0, height: 44.0)).width + 10.0
-            todayButton.frame = CGRect(x: contentView.frame.width - size, y: 0, width: size, height: 44)
+            todayButton.frame = CGRect(x: contentView.frame.width - size - 10, y: 0, width: size, height: 44)
         }
     }
     public var doneButtonTitle = "DONE" {
@@ -114,13 +114,10 @@ import UIKit
                             height: screenSize.height)
         
         // content view
-        contentView = UIView(frame: CGRect(x: 0,
-                                           y: frame.height,
-                                           width: frame.width,
-                                           height: contentHeight))
+        contentView = UIView(frame: CGRect(x: 0, y: frame.height, width: frame.width, height: contentHeight))
         contentView.layer.shadowColor = UIColor(white: 0, alpha: 0.3).cgColor
-        contentView.layer.shadowOffset = CGSize(width: 0, height: -2.0)
-        contentView.layer.shadowRadius = 1.5
+        contentView.layer.shadowOffset = CGSize(width: 0, height: -1.5)
+        contentView.layer.shadowRadius = 0
         contentView.layer.shadowOpacity = 0.5
         contentView.backgroundColor = .white
         contentView.isHidden = true
@@ -154,7 +151,7 @@ import UIKit
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 10
         layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
-        layout.itemSize = CGSize(width: 75, height: 80)
+        layout.itemSize = CGSize(width: 75, height: 75)
         
         dayCollectionView = UICollectionView(frame: CGRect(x: 0, y: 44, width: contentView.frame.width, height: 100), collectionViewLayout: layout)
         dayCollectionView.backgroundColor = daysBackgroundColor
@@ -183,7 +180,7 @@ import UIKit
         doneButton.setTitleColor(.white, for: .normal)
         doneButton.backgroundColor = darkColor.withAlphaComponent(0.5)
         doneButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
-        doneButton.layer.cornerRadius = 3
+        doneButton.layer.cornerRadius = 5
         doneButton.layer.masksToBounds = true
         doneButton.addTarget(self, action: #selector(DateTimePicker.dismissView), for: .touchUpInside)
         contentView.addSubview(doneButton)
@@ -227,12 +224,12 @@ import UIKit
         // time separators
         let separatorTopView = UIView(frame: CGRect(x: 0, y: 0, width: 90, height: 1))
         separatorTopView.backgroundColor = darkColor.withAlphaComponent(0.2)
-        separatorTopView.center = CGPoint(x: contentView.frame.width / 2, y: borderBottomView.frame.origin.y + 36)
+        separatorTopView.center = CGPoint(x: contentView.frame.width / 2, y: (doneButton.frame.origin.y + borderBottomView.frame.origin.y) / 2 - 20)
         contentView.addSubview(separatorTopView)
         
         let separatorBottomView = UIView(frame: CGRect(x: 0, y: 0, width: 90, height: 1))
         separatorBottomView.backgroundColor = darkColor.withAlphaComponent(0.2)
-        separatorBottomView.center = CGPoint(x: contentView.frame.width / 2, y: separatorTopView.frame.origin.y + 36)
+        separatorBottomView.center = CGPoint(x: contentView.frame.width / 2, y: (doneButton.frame.origin.y + borderBottomView.frame.origin.y) / 2 + 20)
         contentView.addSubview(separatorBottomView)
         
         // fill date

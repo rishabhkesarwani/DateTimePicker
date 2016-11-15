@@ -16,11 +16,11 @@ class DateCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         
-        dayLabel = UILabel(frame: CGRect(x: 5, y: 15, width: frame.width - 10, height: 20))
+        dayLabel = UILabel(frame: CGRect(x: 5, y: 14, width: frame.width - 10, height: 20))
         dayLabel.font = UIFont.systemFont(ofSize: 10)
         dayLabel.textAlignment = .center
     
-        numberLabel = UILabel(frame: CGRect(x: 5, y: 30, width: frame.width - 10, height: 40))
+        numberLabel = UILabel(frame: CGRect(x: 5, y: 28, width: frame.width - 10, height: 40))
         numberLabel.font = UIFont.systemFont(ofSize: 25)
         numberLabel.textAlignment = .center
         
@@ -29,7 +29,7 @@ class DateCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(dayLabel)
         contentView.addSubview(numberLabel)
         contentView.backgroundColor = .white
-        contentView.layer.cornerRadius = 3
+        contentView.layer.cornerRadius = 5
         contentView.layer.masksToBounds = true
         contentView.layer.borderWidth = 1
     }
